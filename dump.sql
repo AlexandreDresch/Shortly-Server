@@ -27,8 +27,8 @@ SET default_table_access_method = heap;
 CREATE TABLE public.sessions (
     id integer NOT NULL,
     token text NOT NULL,
-    user_id integer NOT NULL,
-    created_at timestamp without time zone DEFAULT now() NOT NULL
+    "userId" integer NOT NULL,
+    "createdAt" timestamp without time zone DEFAULT now() NOT NULL
 );
 
 
@@ -53,23 +53,24 @@ ALTER SEQUENCE public.sessions_id_seq OWNED BY public.sessions.id;
 
 
 --
--- Name: shortened_links; Type: TABLE; Schema: public; Owner: -
+-- Name: shortenedUrls; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.shortened_links (
+CREATE TABLE public."shortenedUrls" (
     id integer NOT NULL,
-    original_link text NOT NULL,
-    shortened_link text NOT NULL,
-    access_qty integer DEFAULT 0,
-    user_id integer NOT NULL
+    url text NOT NULL,
+    "shortUrl" text NOT NULL,
+    "visitCount" integer DEFAULT 0,
+    "userId" integer NOT NULL,
+    "createdAt" timestamp without time zone DEFAULT now() NOT NULL
 );
 
 
 --
--- Name: shortened_links_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: shortenedUrls_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.shortened_links_id_seq
+CREATE SEQUENCE public."shortenedUrls_id_seq"
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -79,10 +80,10 @@ CREATE SEQUENCE public.shortened_links_id_seq
 
 
 --
--- Name: shortened_links_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: shortenedUrls_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.shortened_links_id_seq OWNED BY public.shortened_links.id;
+ALTER SEQUENCE public."shortenedUrls_id_seq" OWNED BY public."shortenedUrls".id;
 
 
 --
@@ -125,10 +126,10 @@ ALTER TABLE ONLY public.sessions ALTER COLUMN id SET DEFAULT nextval('public.ses
 
 
 --
--- Name: shortened_links id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: shortenedUrls id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.shortened_links ALTER COLUMN id SET DEFAULT nextval('public.shortened_links_id_seq'::regclass);
+ALTER TABLE ONLY public."shortenedUrls" ALTER COLUMN id SET DEFAULT nextval('public."shortenedUrls_id_seq"'::regclass);
 
 
 --
@@ -145,7 +146,7 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
--- Data for Name: shortened_links; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: shortenedUrls; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 
@@ -154,9 +155,6 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.users VALUES (1, 'João', 'joao@gmail.com', '$2b$10$qR11N7NgKNz2r2/dmRk8Pes8wnp3lul08maiCfUg3vJvpYBr8jTUG');
-INSERT INTO public.users VALUES (2, 'João', 'joao@driven.com', '$2b$10$k69NcC0c94daAjmJRiPbDucgN7zSvHz79dYdoqWvYqAk/rpipkCpC');
-INSERT INTO public.users VALUES (3, 'João', 'joao@email.com', '$2b$10$LGXpBZXlNmiR14.Q3a4LyeV04yFo1/ZBXDA.POMSmiM2mTBKENHm6');
 
 
 --
@@ -167,17 +165,17 @@ SELECT pg_catalog.setval('public.sessions_id_seq', 1, false);
 
 
 --
--- Name: shortened_links_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: shortenedUrls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.shortened_links_id_seq', 1, false);
+SELECT pg_catalog.setval('public."shortenedUrls_id_seq"', 1, false);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 3, true);
+SELECT pg_catalog.setval('public.users_id_seq', 1, false);
 
 
 --
@@ -189,11 +187,11 @@ ALTER TABLE ONLY public.sessions
 
 
 --
--- Name: shortened_links shortened_links_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: shortenedUrls shortenedUrls_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.shortened_links
-    ADD CONSTRAINT shortened_links_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public."shortenedUrls"
+    ADD CONSTRAINT "shortenedUrls_pkey" PRIMARY KEY (id);
 
 
 --
@@ -213,19 +211,19 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: sessions sessions_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: sessions sessions_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.sessions
-    ADD CONSTRAINT sessions_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id);
+    ADD CONSTRAINT "sessions_userId_fkey" FOREIGN KEY ("userId") REFERENCES public.users(id);
 
 
 --
--- Name: shortened_links shortened_links_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: shortenedUrls shortenedUrls_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.shortened_links
-    ADD CONSTRAINT shortened_links_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id);
+ALTER TABLE ONLY public."shortenedUrls"
+    ADD CONSTRAINT "shortenedUrls_userId_fkey" FOREIGN KEY ("userId") REFERENCES public.users(id);
 
 
 --

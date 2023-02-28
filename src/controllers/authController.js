@@ -15,7 +15,8 @@ export async function signUp(req, res) {
     res.sendStatus(201);
   } catch (error) {
     console.error(error);
-    return res.sendStatus(500);
+    res.sendStatus(500);
+    return;
   }
 }
 

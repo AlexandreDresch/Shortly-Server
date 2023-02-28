@@ -13,14 +13,15 @@ export async function signUpValidation(req, res, next) {
       [data.email]
     );
 
-    if(verifyEmailAvailability.rowCount > 0) {
-        return res.sendStatus(409);
+    if (verifyEmailAvailability.rowCount > 0) {
+      res.sendStatus(409);
+      return;
     }
 
     res.locals.signUpValues = data;
     next();
   } catch (error) {
-    console.error(error);
-    return res.status(422).send(error);
+    res.status(422).send(error);
+    return;
   }
 }

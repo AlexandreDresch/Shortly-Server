@@ -1,10 +1,10 @@
 import db from "../config/database.js";
 
-import { userSchema } from "../schemas/userSchema.js";
+import { userSignUpSchema } from "../schemas/userSchemas.js";
 
 export async function signUpValidation(req, res, next) {
   try {
-    const data = await userSchema.validateAsync(req.body, {
+    const data = await userSignUpSchema.validateAsync(req.body, {
       abortEarly: false,
     });
 

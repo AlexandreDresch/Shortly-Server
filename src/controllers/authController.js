@@ -3,7 +3,7 @@ import db from "../config/database.js";
 import bcrypt from "bcrypt";
 import { v4 } from "uuid";
 
-export async function signUp(req, res) {
+export async function signUp(_, res) {
   const { signUpValues } = res.locals;
   const { name, email, password } = signUpValues;
   const hashedPassword = bcrypt.hashSync(password, 10);
@@ -22,7 +22,7 @@ export async function signUp(req, res) {
   }
 }
 
-export async function signIn(req, res) {
+export async function signIn(_, res) {
   const { signInValues } = res.locals;
   const { email, password } = signInValues;
 
@@ -55,3 +55,5 @@ export async function signIn(req, res) {
   }
   
 }
+
+

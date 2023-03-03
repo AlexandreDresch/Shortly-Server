@@ -7,9 +7,7 @@ const { Pool } = pg;
 const configDatabase = {
   connectionString: process.env.DATABASE_URL,
   ...(process.env.MODE === "production" && {
-    ssl: {
-      rejectUnauthorized: false,
-    },
+    ssl: true,
   }),
 };
 

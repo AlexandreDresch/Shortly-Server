@@ -81,11 +81,16 @@ export async function deleteUrl(req, res) {
 
   try {
     const urlToDelete = await db.query(
-      `SELECT * FROM "shortenedUrls" WHERE id = $1 AND "userId" = $2`,
-      [id, userIdValue]
+      `SELECT * FROM "shortenedUrls" WHERE id = $1`,
+      [id]
     );
 
-    if (urlToDelete.rowCount > 0) {
+    if (urlToDelete.rowCount === 0) {
+      res.sendStatus(404);
+      return;
+    }
+
+    if (urlToDelete.rows[0].userId === userIdValue) {
       await db.query(
         `DELETE FROM "shortenedUrls" WHERE id = $1 AND "userId" = $2`,
         [id, userIdValue]
@@ -93,7 +98,7 @@ export async function deleteUrl(req, res) {
 
       res.sendStatus(204);
     } else {
-      res.sendStatus(404);
+      res.sendStatus(401);
     }
   } catch (error) {
     console.error(error);

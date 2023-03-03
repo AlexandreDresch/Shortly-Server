@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { createShortenedUrl } from "../controllers/urlController.js";
+import { createShortenedUrl, deleteUrl, getShortenedUrlById, redirectUrl } from "../controllers/urlController.js";
 
 import schemaValidation from "../middlewares/schemaValidation.js";
 import { tokenValidation } from "../middlewares/tokenValidation.js";
@@ -15,5 +15,8 @@ urlsRouter.post(
   schemaValidation(urlSchema),
   createShortenedUrl
 );
+urlsRouter.get("/urls/:id", getShortenedUrlById);
+urlsRouter.get("/urls/open/:shortUrl", redirectUrl);
+urlsRouter.delete("/urls/:id", tokenValidation, deleteUrl)
 
 export default urlsRouter;
